@@ -3,3 +3,5 @@ oud
 test
 *.log*
 downloads/*
+logging/*
+.env
