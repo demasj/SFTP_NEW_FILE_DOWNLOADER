@@ -1,0 +1,6 @@
+{
+    "ftp_remote_directory": "files/in",
+    "local_directory": "downloads",
+    "ftp_check_for_new_files_interations": 30,
+    "ftp_check_for_new_files_interations_delay": 120
+}

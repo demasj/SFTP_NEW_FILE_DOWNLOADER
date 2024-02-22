@@ -58,9 +58,12 @@ def main():
     # Load files to list variable
     files_to_download = file_list['files']
 
-    # Now 'data' is a list loaded from the JSON file
-    remote_directory = 'files'
-    local_directory = 'downloads'
+    # Load config directory settings
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    
+    remote_directory = config['ftp_remote_directory']
+    local_directory = config['local_directory']
 
     # Crete download directory when not eixist
     os.makedirs(local_directory, exist_ok=True)
@@ -71,7 +74,7 @@ def main():
     sftp = paramiko.SFTPClient.from_transport(transport)
     sftp.chdir(remote_directory)
 
-    for _ in range(30):
+    for _ in range(config['ftp_check_for_new_files_interations']):
         remote_files = sftp.listdir()
 
         for file_name in remote_files:
@@ -100,7 +103,7 @@ def main():
         if not files_to_download:
             break
 
-        time.sleep(120)
+        time.sleep(config['ftp_check_for_new_files_interations_delay'])
 
     sftp.close()
     transport.close()
