@@ -33,6 +33,9 @@ def main():
 
     Note: This code snippet assumes that the necessary dependencies (paramiko, logging, dotenv) are installed and the environment variables (FTP_HOSTNAME, FTP_USERNAME, FTP_PASSWORD) are properly set.
     """
+    logging_directory = 'logging'
+    os.makedirs(logging_directory, exist_ok=True)
+
     logger = logging.getLogger('paramiko')
     logger.setLevel(logging.DEBUG)
 
@@ -56,9 +59,10 @@ def main():
     files_to_download = file_list['files']
 
     # Set remote and local locations
-    remote_directory = 'files'
+    remote_directory = 'files/in'
     local_directory = 'downloads'
 
+    # Crete download directory when not eixist
     os.makedirs(local_directory, exist_ok=True)
 
     transport = paramiko.Transport((hostname, 22))
