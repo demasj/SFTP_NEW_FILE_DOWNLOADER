@@ -48,8 +48,6 @@ def main():
     if not hostname or not username or not password:
         raise ValueError('FTP server details are not provided in the environment variables.')
 
-    #files_to_download = ['file1.txt', 'file2.txt', 'file3.txt']
-        
     # Load the JSON file
     with open('file_list.json', 'r') as f:
         file_list = json.load(f)
@@ -57,7 +55,7 @@ def main():
     # Load files to list variable
     files_to_download = file_list['files']
 
-    # Now 'data' is a list loaded from the JSON file
+    # Set remote and local locations
     remote_directory = 'files'
     local_directory = 'downloads'
 
