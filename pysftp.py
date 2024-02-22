@@ -58,7 +58,7 @@ def main():
     files_to_download = file_list['files']
 
     # Now 'data' is a list loaded from the JSON file
-    remote_directory = 'files'
+    remote_directory = 'files/in'
     local_directory = 'downloads'
 
     os.makedirs(local_directory, exist_ok=True)
