@@ -33,6 +33,9 @@ def main():
 
     Note: This code snippet assumes that the necessary dependencies (paramiko, logging, dotenv) are installed and the environment variables (FTP_HOSTNAME, FTP_USERNAME, FTP_PASSWORD) are properly set.
     """
+    logging_directory = 'logging'
+    os.makedirs(logging_directory, exist_ok=True)
+
     logger = logging.getLogger('paramiko')
     logger.setLevel(logging.DEBUG)
 
@@ -48,8 +51,6 @@ def main():
     if not hostname or not username or not password:
         raise ValueError('FTP server details are not provided in the environment variables.')
 
-    #files_to_download = ['file1.txt', 'file2.txt', 'file3.txt']
-        
     # Load the JSON file
     with open('file_list.json', 'r') as f:
         file_list = json.load(f)
@@ -58,9 +59,10 @@ def main():
     files_to_download = file_list['files']
 
     # Now 'data' is a list loaded from the JSON file
-    remote_directory = 'files/in'
+    remote_directory = 'files'
     local_directory = 'downloads'
 
+    # Crete download directory when not eixist
     os.makedirs(local_directory, exist_ok=True)
 
     transport = paramiko.Transport((hostname, 22))
