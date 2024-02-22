@@ -12,8 +12,8 @@ After each iteration, the script checks if all files have been downloaded. If th
 
 Finally, the script closes the SFTP client and transport connection.
 
-# Contribute 
-Before you can contribute to this code, you need to clone this repository and set up your local environment.
+# Instructions 
+Before you can run this code, you need to clone the repository and set up your local environment.
 
 ## Setting up a Virtual Environment
 A virtual environment is a tool that helps to keep dependencies required by different projects separate by creating isolated Python virtual environments for them. Here's how to set it up:
