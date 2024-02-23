@@ -33,6 +33,9 @@ def main():
 
     Note: This code snippet assumes that the necessary dependencies (paramiko, logging, dotenv) are installed and the environment variables (FTP_HOSTNAME, FTP_USERNAME, FTP_PASSWORD) are properly set.
     """
+    logging_directory = 'logging'
+    os.makedirs(logging_directory, exist_ok=True)
+
     logger = logging.getLogger('paramiko')
     logger.setLevel(logging.DEBUG)
 
@@ -55,10 +58,14 @@ def main():
     # Load files to list variable
     files_to_download = file_list['files']
 
-    # Set remote and local locations
-    remote_directory = 'files'
-    local_directory = 'downloads'
+    # Load config directory settings
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    
+    remote_directory = config['ftp_remote_directory']
+    local_directory = config['local_directory']
 
+    # Crete download directory when not eixist
     os.makedirs(local_directory, exist_ok=True)
 
     transport = paramiko.Transport((hostname, 22))
@@ -67,7 +74,7 @@ def main():
     sftp = paramiko.SFTPClient.from_transport(transport)
     sftp.chdir(remote_directory)
 
-    for _ in range(30):
+    for _ in range(config['ftp_check_for_new_files_interations']):
         remote_files = sftp.listdir()
 
         for file_name in remote_files:
@@ -96,7 +103,7 @@ def main():
         if not files_to_download:
             break
 
-        time.sleep(120)
+        time.sleep(config['ftp_check_for_new_files_interations_delay'])
 
     sftp.close()
     transport.close()
