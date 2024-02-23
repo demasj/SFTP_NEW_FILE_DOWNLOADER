@@ -9,29 +9,24 @@ from dotenv import load_dotenv
 
 def main():
     """
-    This code snippet is a script that connects to an FTP server using the paramiko library and downloads a list of files from a remote directory. 
+    This code snippet defines a function named 'main' that performs the following tasks:
+    - Sets up logging configuration and creates a logging directory
+    - Loads environment variables using the 'dotenv' library
+    - Retrieves FTP server details from environment variables and raises a ValueError if any of the details are missing
+    - Loads a JSON file containing a list of files to download
+    - Loads a JSON file containing configuration settings
+    - Creates a local download directory if it doesn't exist
+    - Establishes a connection to the FTP server using the 'paramiko' library
+    - Iterates a specified number of times to check for new files on the FTP server
+    - Retrieves a list of remote files
+    - Checks if each file in the remote file list is in the list of files to download
+    - Compares the modification time of the local file with the remote file and skips the download if the local file is newer
+    - Downloads the remote file to the local directory if it is not already present or if the remote file is newer
+    - Removes the downloaded file from the list of files to download
+    - Sleeps for a specified delay before checking for new files again
+    - Closes the SFTP connection and the transport connection
 
-    The script first sets up logging and loads environment variables from a .env file. It then retrieves the FTP server details from the environment variables and checks if they are provided. 
-
-    Next, the script defines the list of files to download, the remote directory to download files from, and the local directory to save the downloaded files. 
-    It creates the local directory if it doesn't exist.
-
-    The script creates a transport object and connects to the FTP server using the provided hostname, username, and password. 
-    It then creates an SFTP client from the transport object and changes the current directory to the remote directory.
-
-    The script enters a loop that runs 30 times with a 2-minute delay between each iteration. In each iteration, 
-    it retrieves the directory and file listing from the remote directory. 
-    It loops through each file in the directory and checks if it is in the list of files to download. 
-    If it is, the script constructs the local file path, retrieves the remote file's modification time, 
-    and compares it with the local file's modification time. If the local file is newer or the same, 
-    the script skips the download. Otherwise, it attempts to download the file using the SFTP client's get() method and removes the file from the list of files to download. 
-    If the file does not exist on the remote server, the script prints an error message.
-
-    After each iteration, the script checks if all files have been downloaded. If they have, it breaks out of the loop. Otherwise, it delays for 2 minutes before the next iteration.
-
-    Finally, the script closes the SFTP client and transport connection.
-
-    Note: This code snippet assumes that the necessary dependencies (paramiko, logging, dotenv) are installed and the environment variables (FTP_HOSTNAME, FTP_USERNAME, FTP_PASSWORD) are properly set.
+    The 'main' function is called when the script is run as the main module.
     """
     logging_directory = 'logging'
     os.makedirs(logging_directory, exist_ok=True)
